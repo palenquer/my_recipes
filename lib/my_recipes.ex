@@ -9,4 +9,5 @@ defmodule MyRecipes do
   alias MyRecipes.Recipes
 
   defdelegate create(params), to: Recipes, as: :create_recipe
+  defdelegate show(id), to: Recipes, as: :show_recipe
 end
