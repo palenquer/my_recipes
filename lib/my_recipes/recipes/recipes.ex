@@ -16,4 +16,26 @@ defmodule MyRecipes.Recipes do
     Recipe.changeset(%Recipe{}, attrs)
     |> Repo.insert()
   end
+
+  def update_recipe(id, attrs) do
+    case Repo.get(Recipe, id) do
+      nil ->
+        {:error, :not_found}
+
+      recipe ->
+        Recipe.changeset(recipe, attrs)
+        |> Repo.update()
+    end
+  end
+
+  def delete_recipe(id) do
+    case Repo.get(Recipe, id) do
+      nil ->
+        {:error, :not_found}
+
+      recipe ->
+        recipe
+        |> Repo.delete()
+    end
+  end
 end

@@ -1,7 +1,7 @@
 defmodule MyRecipesWeb.MyRecipesView do
   use MyRecipesWeb, :view
 
-  def render("create.json", %{recipe: recipe}) do
+  def render("show.json", %{recipe: recipe}) do
     %{
       id: recipe.id,
       title: recipe.title,
@@ -11,13 +11,9 @@ defmodule MyRecipesWeb.MyRecipesView do
     }
   end
 
-  def render("show.json", %{recipe: recipe}) do
+  def render("delete.json", %{recipe: recipe}) do
     %{
-      id: recipe.id,
-      title: recipe.title,
-      author: recipe.author,
-      method: recipe.method,
-      ingredients: recipe.ingredients
+      message: "Recipe with id #{recipe.id} successfully deleted!"
     }
   end
 end

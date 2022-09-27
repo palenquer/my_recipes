@@ -21,8 +21,6 @@ defmodule MyRecipesWeb.ErrorView do
   end
 
   def render("400.json", %{result: result}) do
-    IO.inspect(result)
-
     %{message: translate_errors(result)}
   end
 

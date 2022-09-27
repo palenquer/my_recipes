@@ -10,4 +10,7 @@ defmodule MyRecipes do
 
   defdelegate create(params), to: Recipes, as: :create_recipe
   defdelegate show(id), to: Recipes, as: :show_recipe
+  defdelegate update(id, params), to: Recipes, as: :update_recipe
+
+  defdelegate delete(id), to: Recipes, as: :delete_recipe
 end

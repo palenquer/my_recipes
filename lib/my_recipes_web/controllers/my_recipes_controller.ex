@@ -6,13 +6,25 @@ defmodule MyRecipesWeb.MyRecipesController do
   def create(conn, params) do
     params
     |> MyRecipes.create()
-    |> handle_response(conn, "create.json", :created)
+    |> handle_response(conn, "show.json", :created)
   end
 
   def show(conn, %{"id" => id}) do
     id
     |> MyRecipes.show()
     |> handle_response(conn, "show.json", :ok)
+  end
+
+  def update(conn, %{"id" => id} = params) do
+    id
+    |> MyRecipes.update(params)
+    |> handle_response(conn, "show.json", :ok)
+  end
+
+  def delete(conn, %{"id" => id}) do
+    id
+    |> MyRecipes.delete()
+    |> handle_response(conn, "delete.json", :ok)
   end
 
   defp handle_response({:ok, recipe}, conn, view, status) do
