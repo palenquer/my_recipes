@@ -2,12 +2,15 @@ defmodule MyRecipes.Recipe do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias MyRecipes.User
+
   schema "recipe" do
     field :title, :string
     field :author, :string
     field :method, :string
     field :cook_time, :integer
     field :ingredients, {:array, :string}
+    belongs_to :user, User
     timestamps()
   end
 

@@ -23,6 +23,7 @@ defmodule MyRecipesWeb.Router do
   scope "/api", MyRecipesWeb do
     pipe_through :api
 
+    resources "/users", UserController, only: [:show, :create, :delete, :update]
     resources "/recipes", MyRecipesController, only: [:show, :create, :delete, :update]
   end
 
