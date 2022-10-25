@@ -1,12 +1,12 @@
 defmodule MyRecipesWeb.UserController do
   use MyRecipesWeb, :controller
+  alias MyRecipes.Repo
   alias MyRecipes
 
   action_fallback FallbackController
   def create(conn, params) do
     params
     |> MyRecipes.create_user()
-    |> IO.inspect()
     |> handle_response(conn, "show.json", :created)
   end
 
@@ -31,7 +31,7 @@ defmodule MyRecipesWeb.UserController do
   defp handle_response({:ok, user}, conn, view, status) do
     conn
     |> put_status(status)
-    |> render(view, user: user)
+    |> render(view, user: Repo.preload(user, :recipes))
   end
 
   defp handle_response({:error, _changeset} = error, _conn, _view, _status), do: error
