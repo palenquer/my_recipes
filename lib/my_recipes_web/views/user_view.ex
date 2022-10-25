@@ -1,11 +1,13 @@
 defmodule MyRecipesWeb.UserView do
   use MyRecipesWeb, :view
+  alias MyRecipesWeb.MyRecipesView
 
   def render("show.json", %{user: user}) do
     %{
       id: user.id,
       username: user.username,
-      password: user.password_hash
+      password: user.password_hash,
+      recipes: render_many(user.recipes, MyRecipesView, "show.json", as: :recipe)
     }
   end
 
