@@ -15,7 +15,6 @@ defmodule MyRecipes.Users do
   def create_user(attrs) do
     User.changeset(%User{}, attrs)
     |> Repo.insert()
-    |> IO.inspect()
   end
 
   def update_user(id, attrs) do
