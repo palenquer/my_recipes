@@ -3,10 +3,11 @@ defmodule MyRecipesWeb.MyRecipesController do
   alias MyRecipes
 
   action_fallback FallbackController
+
   def create(conn, params) do
     params
     |> MyRecipes.create()
-    |> handle_response(conn, "show.json", :created)
+    |> handle_response(conn, "create.json", :created)
   end
 
   def show(conn, %{"id" => id}) do

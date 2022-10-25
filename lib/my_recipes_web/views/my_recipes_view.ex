@@ -7,7 +7,20 @@ defmodule MyRecipesWeb.MyRecipesView do
       title: recipe.title,
       author: recipe.author,
       method: recipe.method,
-      ingredients: recipe.ingredients
+      ingredients: recipe.ingredients,
+      cook_time: recipe.cook_time,
+    }
+  end
+
+  def render("create.json", %{recipe: recipe}) do
+    %{
+      id: recipe.id,
+      title: recipe.title,
+      author: recipe.author,
+      method: recipe.method,
+      ingredients: recipe.ingredients,
+      cook_time: recipe.cook_time,
+      user_id: recipe.user_id
     }
   end
 
