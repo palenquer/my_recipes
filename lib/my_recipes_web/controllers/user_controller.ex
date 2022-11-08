@@ -4,35 +4,52 @@ defmodule MyRecipesWeb.UserController do
   alias MyRecipes
 
   action_fallback FallbackController
+
   def create(conn, params) do
-    params
-    |> MyRecipes.create_user()
-    |> handle_response(conn, "show.json", :created)
+    case MyRecipes.create_user(params) do
+      {:ok, user} ->
+        conn
+        |> put_status(:created)
+        |> render("show.json", user: Repo.preload(user, :recipes))
+
+      {:error, _changeset} = error ->
+        error
+    end
   end
 
   def show(conn, %{"id" => id}) do
-    id
-    |> MyRecipes.show_user()
-    |> handle_response(conn, "show.json", :ok)
+    case MyRecipes.show_user(id) do
+      {:ok, user} ->
+        conn
+        |> put_status(:ok)
+        |> render("show.json", user: Repo.preload(user, :recipes))
+
+      {:error, _changeset} = error ->
+        error
+    end
   end
 
   def update(conn, %{"id" => id} = params) do
-    id
-    |> MyRecipes.update_user(params)
-    |> handle_response(conn, "show.json", :ok)
+    case MyRecipes.update_user(id, params) do
+      {:ok, user} ->
+        conn
+        |> put_status(:ok)
+        |> render("show.json", user: Repo.preload(user, :recipes))
+
+      {:error, _changeset} = error ->
+        error
+    end
   end
 
   def delete(conn, %{"id" => id}) do
-    id
-    |> MyRecipes.delete_user()
-    |> handle_response(conn, "delete.json", :ok)
-  end
+    case MyRecipes.delete_user(id) do
+      {:ok, user} ->
+        conn
+        |> put_status(:ok)
+        |> render("delete.json", user: Repo.preload(user, :recipes))
 
-  defp handle_response({:ok, user}, conn, view, status) do
-    conn
-    |> put_status(status)
-    |> render(view, user: Repo.preload(user, :recipes))
+      {:error, _changeset} = error ->
+        error
+    end
   end
-
-  defp handle_response({:error, _changeset} = error, _conn, _view, _status), do: error
 end

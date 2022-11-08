@@ -6,7 +6,6 @@ defmodule MyRecipesWeb.UserView do
     %{
       id: user.id,
       username: user.username,
-      password: user.password_hash,
       recipes: render_many(user.recipes, MyRecipesView, "show.json", as: :recipe)
     }
   end

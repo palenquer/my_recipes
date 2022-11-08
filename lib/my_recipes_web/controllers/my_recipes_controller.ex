@@ -5,34 +5,50 @@ defmodule MyRecipesWeb.MyRecipesController do
   action_fallback FallbackController
 
   def create(conn, params) do
-    params
-    |> MyRecipes.create()
-    |> handle_response(conn, "create.json", :created)
+    case MyRecipes.create(params) do
+      {:ok, recipe} ->
+        conn
+        |> put_status(:created)
+        |> render("create.json", recipe: recipe)
+
+      {:error, _changeset} = error ->
+        error
+    end
   end
 
   def show(conn, %{"id" => id}) do
-    id
-    |> MyRecipes.show()
-    |> handle_response(conn, "show.json", :ok)
+    case MyRecipes.show(id) do
+      {:ok, recipe} ->
+        conn
+        |> put_status(:ok)
+        |> render("show.json", recipe: recipe)
+
+      {:error, _changeset} = error ->
+        error
+    end
   end
 
   def update(conn, %{"id" => id} = params) do
-    id
-    |> MyRecipes.update(params)
-    |> handle_response(conn, "show.json", :ok)
+    case MyRecipes.update(id, params) do
+      {:ok, recipe} ->
+        conn
+        |> put_status(:ok)
+        |> render("show.json", recipe: recipe)
+
+      {:error, _changeset} = error ->
+        error
+    end
   end
 
   def delete(conn, %{"id" => id}) do
-    id
-    |> MyRecipes.delete()
-    |> handle_response(conn, "delete.json", :ok)
-  end
+    case MyRecipes.delete(id) do
+      {:ok, recipe} ->
+        conn
+        |> put_status(:ok)
+        |> render("delete.json", recipe: recipe)
 
-  defp handle_response({:ok, recipe}, conn, view, status) do
-    conn
-    |> put_status(status)
-    |> render(view, recipe: recipe)
+      {:error, _changeset} = error ->
+        error
+    end
   end
-
-  defp handle_response({:error, _changeset} = error, _conn, _view, _status), do: error
 end
