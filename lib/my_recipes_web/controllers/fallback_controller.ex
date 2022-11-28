@@ -10,7 +10,7 @@ defmodule FallbackController do
 
   def call(conn, {:error, error}) do
     conn
-    |> put_status(error)
+    |> put_status(404)
     |> put_view(MyRecipesWeb.ErrorView)
     |> render("404.json", message: error)
   end

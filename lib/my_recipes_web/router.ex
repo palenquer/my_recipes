@@ -25,6 +25,8 @@ defmodule MyRecipesWeb.Router do
 
     resources "/users", UserController, only: [:show, :create, :delete, :update]
     resources "/recipes", MyRecipesController, only: [:show, :create, :delete, :update]
+
+    post "/users/signin", UserController, :sign_in
   end
 
   # Other scopes may use custom stacks.

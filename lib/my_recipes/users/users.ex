@@ -3,12 +3,11 @@ defmodule MyRecipes.Users do
   alias MyRecipes.User
 
   def show_user(id) do
-    case Repo.get(User, id) do
-      nil ->
-        {:error, :not_found}
-
-      user ->
-        {:ok, user}
+    with {:ok, user_id} <- Ecto.UUID.cast(id),
+         user <- Repo.get(User, user_id) do
+      {:ok, user}
+    else
+      :error -> {:error, :not_found}
     end
   end
 
