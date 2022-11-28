@@ -49,7 +49,7 @@ config :phoenix, :json_library, Jason
 
 config :my_recipes, MyRecipesWeb.Auth.Guardian,
        issuer: "my_recipes",
-       secret_key: "x6f1VHmgHj4cPnE5u/2qlCuHQjNBo6R4VTU9dWysLI1etPtGdm22vNrDyl7IJaDs"
+       secret_key: System.get_env("GUARDIAN_AUTH_KEY")
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
