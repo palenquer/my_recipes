@@ -4,6 +4,17 @@ defmodule MyRecipesWeb.MyRecipesController do
 
   action_fallback FallbackController
 
+  def index(conn, _params) do
+    case MyRecipes.index() do
+      {:ok, recipes} ->
+        conn
+        |> put_status(:ok)
+        |> render("index.json", recipes: recipes)
+
+      {:error, _changeset} = error ->
+        error
+    end
+  end
   def create(conn, params) do
     case MyRecipes.create(params) do
       {:ok, recipe} ->

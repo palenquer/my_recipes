@@ -1,6 +1,19 @@
 defmodule MyRecipesWeb.MyRecipesView do
   use MyRecipesWeb, :view
 
+  def render("index.json", %{recipes: recipes}) do
+      %{
+        recipes: Enum.map(recipes, fn recipe -> %{
+          id: recipe.id,
+          title: recipe.title,
+          author: recipe.author,
+          method: recipe.method,
+          ingredients: recipe.ingredients,
+          cook_time: recipe.cook_time
+        } end)
+      }
+  end
+
   def render("show.json", %{recipe: recipe}) do
     %{
       recipe: %{

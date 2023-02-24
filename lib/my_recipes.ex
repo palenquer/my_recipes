@@ -9,6 +9,7 @@ defmodule MyRecipes do
   alias MyRecipes.Recipes
   alias MyRecipes.Users
 
+  defdelegate index(), to: Recipes, as: :index_recipe
   defdelegate create(params), to: Recipes, as: :create_recipe
   defdelegate show(id), to: Recipes, as: :show_recipe
   defdelegate update(id, params), to: Recipes, as: :update_recipe

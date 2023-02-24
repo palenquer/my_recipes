@@ -2,6 +2,15 @@ defmodule MyRecipes.Recipes do
   alias MyRecipes.Repo
   alias MyRecipes.Recipe
 
+  def index_recipe() do
+    case Repo.all(Recipe) do
+      nil ->
+        {:error, :not_found}
+
+      recipes ->
+        {:ok, recipes}
+    end
+  end
   def show_recipe(id) do
     case Repo.get(Recipe, id) do
       nil ->
