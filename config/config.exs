@@ -54,3 +54,7 @@ config :my_recipes, MyRecipesWeb.Auth.Guardian,
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{config_env()}.exs"
+
+config :my_recipes, MyRecipesWeb.Auth.Pipeline,
+  module: MyRecipesWeb.Auth.Guardian,
+  error_handler: MyRecipesWeb.Auth.ErrorHandler
