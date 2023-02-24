@@ -14,6 +14,10 @@ defmodule MyRecipesWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :auth do
+    plug MyRecipesWeb.Auth.Pipeline
+  end
+
   scope "/", MyRecipesWeb do
     pipe_through :browser
 
@@ -23,10 +27,18 @@ defmodule MyRecipesWeb.Router do
   scope "/api", MyRecipesWeb do
     pipe_through :api
 
-    resources "/users", UserController, only: [:show, :create, :delete, :update]
-    resources "/recipes", MyRecipesController, only: [:show, :create, :delete, :update]
-
+    post "/users", UserController, :create
     post "/users/signin", UserController, :sign_in
+
+    get "/recipes", MyRecipesController, only: [:index, :show]
+  end
+
+  scope "/api", MyRecipesWeb do
+    pipe_through [:api, :auth]
+
+    resources "/users", UserController, only: [:show, :delete, :update]
+
+    resources "/recipes", MyRecipesController, only: [:index, :show, :create, :delete, :update]
   end
 
   # Other scopes may use custom stacks.

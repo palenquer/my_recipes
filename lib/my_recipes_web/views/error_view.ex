@@ -20,6 +20,10 @@ defmodule MyRecipesWeb.ErrorView do
     %{message: error}
   end
 
+  def render("401.json", %{message: error}) do
+    %{message: error}
+  end
+
   def render("400.json", %{result: result}) do
     %{message: translate_errors(result)}
   end

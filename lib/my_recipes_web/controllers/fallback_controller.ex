@@ -8,6 +8,13 @@ defmodule FallbackController do
     |> render("400.json", result: result)
   end
 
+  def call(conn, {:error, :unauthorized}) do
+    conn
+    |> put_status(:unauthorized)
+    |> put_view(MyRecipesWeb.ErrorView)
+    |> render("401.json", message: "User unauthorized")
+  end
+
   def call(conn, {:error, error}) do
     conn
     |> put_status(404)
