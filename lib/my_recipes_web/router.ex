@@ -30,7 +30,7 @@ defmodule MyRecipesWeb.Router do
     post "/users", UserController, :create
     post "/users/signin", UserController, :sign_in
 
-    get "/recipes", MyRecipesController, only: [:index, :show]
+    resources "/recipes", MyRecipesController, only: [:index, :show]
   end
 
   scope "/api", MyRecipesWeb do
@@ -38,7 +38,7 @@ defmodule MyRecipesWeb.Router do
 
     resources "/users", UserController, only: [:show, :delete, :update]
 
-    resources "/recipes", MyRecipesController, only: [:index, :show, :create, :delete, :update]
+    resources "/recipes", MyRecipesController, only: [:create, :delete, :update]
   end
 
   # Other scopes may use custom stacks.
